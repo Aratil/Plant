@@ -17,10 +17,12 @@ namespace plant1.Pages
             _logger = logger;
         }
 
-
         public void OnGet()
         {
-
+            String myName = "Arati Lama";
+            int age = 31;
+            ViewData["MyName"] = myName;
+            ViewData["age"] = age;
         }
     }
 }
