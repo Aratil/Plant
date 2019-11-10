@@ -30,15 +30,36 @@ namespace plant1.Pages
 
             using(WebClient webClient = new WebClient())
             {
+                string plantData = webClient.DownloadString("http://www.plantplaces.com/perl/mobile/viewplantsjsonarray.pl?WetTolerant=on");
+                QuickTypePlant.Plant[] allPlants = QuickTypePlant.Plant.FromJson(plantData);
+
+                IDictionary<long, QuickTypePlant.Plant> plantDictionary = new Dictionary<long, QuickTypePlant.Plant>();
+                foreach(QuickTypePlant.Plant plant in allPlants)
+                {
+                    plantDictionary.Add(plant.Id, plant);
+                }
+
                 string jsonData = webClient.DownloadString("https://www.plantplaces.com/perl/mobile/viewspecimenlocations.pl?Lat=39.14455075&Lng=-84.5093939666667&Range=0.5&Source=location&Version=2");
                 QuickType.Welcome welcome = QuickType.Welcome.FromJson(jsonData);
                 List<QuickType.Specimen> allSpecimens = welcome.Specimens;
-                ViewData["allSpecimens"] = allSpecimens;
+
+                
+                IList<QuickType.Specimen> waterLovingSpecimens = new List<QuickType.Specimen>();
+
                 foreach (QuickType.Specimen specimen in allSpecimens)
                 {
                     Console.WriteLine(specimen);
+                    if (plantDictionary.ContainsKey(specimen.PlantId) )
+                    {
+                        waterLovingSpecimens.Add(specimen);
+
+                    }
+                   
                 }
+                ViewData["allSpecimens"] = waterLovingSpecimens;
+
             }
+           
         }
     }
 }
