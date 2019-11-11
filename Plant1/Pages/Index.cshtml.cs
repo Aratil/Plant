@@ -30,6 +30,7 @@ namespace plant1.Pages
 
             using(WebClient webClient = new WebClient())
             {
+                string wetherData = webClient.DownloadString("https://api.weatherbit.io/v2.0/current?&city=Cincinnati&country=USA&key=b1326b6a9b2e40c7a068708325bc268c");
                 string plantData = webClient.DownloadString("http://www.plantplaces.com/perl/mobile/viewplantsjsonarray.pl?WetTolerant=on");
                 QuickTypePlant.Plant[] allPlants = QuickTypePlant.Plant.FromJson(plantData);
 
