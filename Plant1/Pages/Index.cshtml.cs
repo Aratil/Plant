@@ -21,7 +21,7 @@ namespace plant1.Pages
         public void OnGet()
         {
             String myName = "Arati Lama";
-            int age = 31;
+            int age = 30;
             ViewData["MyName"] = myName;
             ViewData["age"] = age;
             long precip = 0;
